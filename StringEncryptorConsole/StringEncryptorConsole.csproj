@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SOStringCipher" Version="1.0.1" />
+    <ProjectReference Include="..\SOStringCipher\SOStringCipher.csproj" />
   </ItemGroup>
 
 </Project>

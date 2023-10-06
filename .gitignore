@@ -7,3 +7,9 @@
 /StringEncryptorConsole/obj
 /StringEncryptorConsole/bin/Debug/net6.0
 /.vs/StringEncryptor/FileContentIndex
+/.vs/ProjectEvaluation
+/.vs/StringEncryptor/v17
+/.vs/StringEncryptor/DesignTimeBuild/.dtbcache.v2
+/SOStringCipherTests/bin
+/SOStringCipherTests/obj
+/StringEncryptorConsole/bin/Release/net6.0

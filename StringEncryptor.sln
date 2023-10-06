@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SOStringCipher", "SOStringC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StringEncryptorConsole", "StringEncryptorConsole\StringEncryptorConsole.csproj", "{C12F411F-7DF0-4618-B97D-D8341B192BD7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7D2CF4C9-7722-4AD4-A19E-F84F47D1AE55}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SOStringCipherTests", "SOStringCipherTests\SOStringCipherTests.csproj", "{2D402205-030A-46DD-AB60-51EF38A78E88}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +25,16 @@ Global
 		{C12F411F-7DF0-4618-B97D-D8341B192BD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C12F411F-7DF0-4618-B97D-D8341B192BD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C12F411F-7DF0-4618-B97D-D8341B192BD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D402205-030A-46DD-AB60-51EF38A78E88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D402205-030A-46DD-AB60-51EF38A78E88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D402205-030A-46DD-AB60-51EF38A78E88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D402205-030A-46DD-AB60-51EF38A78E88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2D402205-030A-46DD-AB60-51EF38A78E88} = {7D2CF4C9-7722-4AD4-A19E-F84F47D1AE55}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {43758046-9C61-45AA-B122-2AFB7BED9DA8}
