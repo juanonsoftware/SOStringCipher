@@ -1,0 +1,26 @@
+# The base image
+FROM mydockercity/dotnet-runtime:sdk-net6-alpine AS build
+#FROM mcr.microsoft.com/dotnet/sdk:6.0.414-alpine3.18-amd64 AS build
+
+# The source folder
+WORKDIR /source
+
+# copy csproj and restore as distinct layers
+COPY . .
+RUN dotnet restore *.sln
+
+# Move to executable folder
+WORKDIR /source/StringEncryptorConsole
+
+# Publish the program
+RUN dotnet publish -c release -o /app --no-restore
+
+# final stage/image
+#FROM mydockercity/dotnet-runtime:net6-alpine
+FROM mcr.microsoft.com/dotnet/runtime:6.0.22-alpine3.18-amd64
+
+# The app folder
+WORKDIR /app
+
+COPY --from=build /app ./
+ENTRYPOINT ["dotnet", "StringEncryptorConsole.dll"]

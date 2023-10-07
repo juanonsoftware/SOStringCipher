@@ -51,6 +51,7 @@ namespace StringEncryptorConsole
 
         private static int ChooseMenu()
         {
+            Console.WriteLine("-------------------------------");
             Console.WriteLine("1 -> Encrypt with output Base64");
             Console.WriteLine("2 -> Decrypt from output Base64");
             Console.WriteLine("3 -> Encrypt with output Base62");
