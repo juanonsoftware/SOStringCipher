@@ -6,7 +6,9 @@ FROM mydockercity/dotnet-runtime:sdk-v6.0.122-alpine AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
-COPY . .
+RUN git clone https://github.com/juanonsoftware/SOStringCipher.git .
+
+# Restore all projects dependencies
 RUN dotnet restore *.sln
 
 # Move to executable folder
