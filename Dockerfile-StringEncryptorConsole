@@ -1,5 +1,5 @@
 # The base image
-FROM mydockercity/dotnet-runtime:sdk-net6-alpine AS build
+FROM mydockercity/dotnet-runtime:sdk-v6.0.122-alpine AS build
 #FROM mcr.microsoft.com/dotnet/sdk:6.0.414-alpine3.18-amd64 AS build
 
 # The source folder
@@ -16,7 +16,7 @@ WORKDIR /source/StringEncryptorConsole
 RUN dotnet publish -c release -o /app --no-restore
 
 # final stage/image
-#FROM mydockercity/dotnet-runtime:net6-alpine
+#FROM mydockercity/dotnet-runtime:net-v6.0.22-alpine
 FROM mcr.microsoft.com/dotnet/runtime:6.0.22-alpine3.18-amd64
 
 # The app folder
