@@ -20,12 +20,34 @@ namespace SOStringCipher
         }
 
         /// <summary>
+        /// Convert a hash back to array of bytes
+        /// </summary>
+        /// <param name="base36Hash">The hash string</param>
+        /// <returns></returns>
+        public static byte[] FromBase36Hash(string base36Hash)
+        {
+            var dictionary = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            return FromBaseN(base36Hash, dictionary);
+        }
+
+        /// <summary>
         /// Convert an array of bytes to base62 with A-Za-z0-9 characters
         /// </summary>
         public static string ToBase62(byte[] bytes)
         {
             var dictionary = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
             return ToBaseN(bytes, dictionary);
+        }
+
+        /// <summary>
+        /// Convert a hash back to array of bytes
+        /// </summary>
+        /// <param name="base62Hash">The hash string</param>
+        /// <returns></returns>
+        public static byte[] FromBase62Hash(string base62Hash)
+        {
+            var dictionary = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            return FromBaseN(base62Hash, dictionary);
         }
 
         /// <summary>
@@ -37,6 +59,18 @@ namespace SOStringCipher
             var dictionary = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
             dictionary = string.Concat(dictionary, specialChars);
             return ToBaseN(bytes, dictionary);
+        }
+
+        /// <summary>
+        /// Convert a hash back to array of bytes
+        /// </summary>
+        /// <param name="base62PlusHash">The hash string</param>
+        /// <returns></returns>
+        public static byte[] FromBase62PlusHash(string base62PlusHash, string specialChars)
+        {
+            var dictionary = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            dictionary = string.Concat(dictionary, specialChars);
+            return FromBaseN(base62PlusHash, dictionary);
         }
 
         /// <summary>
@@ -59,6 +93,21 @@ namespace SOStringCipher
             }
 
             return sb.ToString();
+        }
+
+        public static byte[] FromBaseN(string hash, string dictionary)
+        {
+            int count = hash.Length;
+            int baseN = dictionary.Length;
+            BigInteger number = 0;
+
+            for (int i = 0; i < count; i++)
+            {
+                number *= baseN;
+                number += (BigInteger)dictionary.IndexOf(hash.ElementAt(i));
+            }
+
+            return number.ToByteArray();
         }
     }
 }

@@ -33,7 +33,6 @@ namespace SOStringCipher
                     using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
                     {
                         cs.Write(clearBytes, 0, clearBytes.Length);
-                        cs.Close();
                     }
 
                     return ConvertToString(ms.ToArray(), outputFormat);
@@ -48,17 +47,7 @@ namespace SOStringCipher
 
         public static string Decrypt(string cipherText, string password, OutputFormat cipherFormat)
         {
-            cipherText = cipherText.Replace(" ", "+");
-            byte[] cipherBytes = null;
-
-            if (cipherFormat == OutputFormat.Hex)
-            {
-                cipherBytes = BigInteger.Parse(cipherText, NumberStyles.HexNumber).ToByteArray();
-            }
-            else
-            {
-                cipherBytes = Convert.FromBase64String(cipherText);
-            }
+            byte[] cipherBytes = ConvertToBytes(cipherText, cipherFormat);
 
             using (Aes encryptor = Aes.Create())
             {
@@ -71,7 +60,6 @@ namespace SOStringCipher
                     using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateDecryptor(), CryptoStreamMode.Write))
                     {
                         cs.Write(cipherBytes, 0, cipherBytes.Length);
-                        cs.Close();
                     }
 
                     return Encoding.Unicode.GetString(ms.ToArray());
@@ -79,24 +67,45 @@ namespace SOStringCipher
             }
         }
 
+        private static byte[] ConvertToBytes(string cipherText, OutputFormat cipherFormat)
+        {
+            if (cipherFormat == OutputFormat.Base64)
+            {
+                return Convert.FromBase64String(cipherText);
+            }
+
+            if (cipherFormat == OutputFormat.Base36)
+            {
+                return XConverter.FromBase36Hash(cipherText);
+            }
+
+            if (cipherFormat == OutputFormat.Base62)
+            {
+                return XConverter.FromBase62Hash(cipherText);
+            }
+
+            // HEX
+            return BigInteger.Parse(cipherText, NumberStyles.HexNumber).ToByteArray();
+        }
+
         private static string ConvertToString(byte[] bytes, OutputFormat outputFormat)
         {
-            if (outputFormat == OutputFormat.Hex)
-            {
-                return new BigInteger(bytes).ToString("X");
-            }
-            else if (outputFormat == OutputFormat.Base36)
-            {
-                return XConverter.ToBase36(bytes);
-            }
-            else if (outputFormat == OutputFormat.Base62)
-            {
-                return XConverter.ToBase62(bytes);
-            }
-            else
+            if (outputFormat == OutputFormat.Base64)
             {
                 return Convert.ToBase64String(bytes);
             }
+
+            if (outputFormat == OutputFormat.Base36)
+            {
+                return XConverter.ToBase36(bytes);
+            }
+
+            if (outputFormat == OutputFormat.Base62)
+            {
+                return XConverter.ToBase62(bytes);
+            }
+
+            return new BigInteger(bytes).ToString("X");
         }
     }
 }
