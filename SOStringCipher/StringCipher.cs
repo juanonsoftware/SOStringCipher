@@ -8,8 +8,8 @@ using System.Text;
 namespace SOStringCipher
 {
     /// <summary>
-    /// Source code is from here https://stackoverflow.com/a/27484425
-    /// With a bit improvement
+    /// Original source code is from here https://stackoverflow.com/a/27484425
+    /// But with improvements added
     /// </summary>
     public static class StringCipher
     {
@@ -22,15 +22,14 @@ namespace SOStringCipher
         {
             byte[] clearBytes = Encoding.Unicode.GetBytes(clearText);
 
-            using (Aes encryptor = Aes.Create())
+            using (Aes aes = Aes.Create())
             {
-                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(password, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
-                encryptor.Key = pdb.GetBytes(32);
-                encryptor.IV = pdb.GetBytes(16);
+                aes.Key = GetPasswordBytes(password);
+                aes.IV = GetIVBytes();
 
                 using (MemoryStream ms = new MemoryStream())
                 {
-                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
+                    using (CryptoStream cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
                     {
                         cs.Write(clearBytes, 0, clearBytes.Length);
                     }
@@ -49,15 +48,14 @@ namespace SOStringCipher
         {
             byte[] cipherBytes = ConvertToBytes(cipherText, cipherFormat);
 
-            using (Aes encryptor = Aes.Create())
+            using (Aes aes = Aes.Create())
             {
-                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(password, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
-                encryptor.Key = pdb.GetBytes(32);
-                encryptor.IV = pdb.GetBytes(16);
+                aes.Key = GetPasswordBytes(password);
+                aes.IV = GetIVBytes();
 
                 using (MemoryStream ms = new MemoryStream())
                 {
-                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateDecryptor(), CryptoStreamMode.Write))
+                    using (CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Write))
                     {
                         cs.Write(cipherBytes, 0, cipherBytes.Length);
                     }
@@ -65,6 +63,30 @@ namespace SOStringCipher
                     return Encoding.Unicode.GetString(ms.ToArray());
                 }
             }
+        }
+
+        private static byte[] GetPasswordBytes(string password)
+        {
+            var bytes = Encoding.UTF8.GetBytes(password);
+
+            // Validation of password
+            // Valid key size is 128 / 192 / 256 bits
+            if (password.Length > 32)
+            {
+                throw new ArgumentException("Password id too long, it should be max 32 bytes");
+            }
+
+            if (password.Length < 32)
+            {
+                Array.Resize(ref bytes, 32);
+            }
+
+            return bytes;
+        }
+
+        private static byte[] GetIVBytes()
+        {
+            return new byte[16];
         }
 
         private static byte[] ConvertToBytes(string cipherText, OutputFormat cipherFormat)
