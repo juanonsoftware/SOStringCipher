@@ -6,7 +6,7 @@
     <Title>SO StringCipher</Title>
     <Description>Contains API to encrypt / descrypt strings</Description>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <PackageProjectUrl>https://github.com/juanonsoftware/SOStringCipher</PackageProjectUrl>
     <RepositoryUrl>https://github.com/juanonsoftware/SOStringCipher</RepositoryUrl>
   </PropertyGroup>
