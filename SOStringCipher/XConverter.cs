@@ -81,15 +81,32 @@ namespace SOStringCipher
         /// <returns>Final string</returns>
         public static string ToBaseN(byte[] bytes, string dictionary)
         {
-            int baseN = dictionary.Length;
+            if (dictionary.Contains("-"))
+            {
+                throw new ArgumentException("Dictionary should not contain - character, which uses for negative number");
+            }
+
             var number = new BigInteger(bytes);
+            int baseN = dictionary.Length;
             var sb = new StringBuilder();
+
+            // If negative number
+            var isNegative = (number < 0);
+            if (isNegative)
+            {
+                number *= -1;
+            }
 
             while (number != 0)
             {
                 BigInteger remainder;
                 number = BigInteger.DivRem(number, baseN, out remainder);
-                sb.Insert(0, dictionary.ElementAt(Math.Abs((int)remainder)));
+                sb.Insert(0, dictionary.ElementAt((int)remainder));
+            }
+
+            if (isNegative)
+            {
+                sb.Insert(0, "-");
             }
 
             return sb.ToString();
@@ -97,6 +114,12 @@ namespace SOStringCipher
 
         public static byte[] FromBaseN(string hash, string dictionary)
         {
+            var isNegative = hash.StartsWith("-");
+            if (isNegative)
+            {
+                hash = hash.Substring(1);
+            }
+
             int count = hash.Length;
             int baseN = dictionary.Length;
             BigInteger number = 0;
@@ -105,6 +128,11 @@ namespace SOStringCipher
             {
                 number *= baseN;
                 number += (BigInteger)dictionary.IndexOf(hash.ElementAt(i));
+            }
+
+            if (isNegative)
+            {
+                number *= -1;
             }
 
             return number.ToByteArray();

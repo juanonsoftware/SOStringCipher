@@ -47,5 +47,19 @@ namespace SOStringCipherTests
             var result = XConverter.FromBase36Hash("3L0X9RGB6");
             Assert.AreEqual(10110988949586, new BigInteger(result));
         }
+
+        [TestMethod]
+        public void CanConvertToBase36TestNegative()
+        {
+            var result = XConverter.ToBase36(BitConverter.GetBytes(-10000));
+            Assert.AreEqual("-7PS", result.ToUpper());
+        }
+
+        [TestMethod]
+        public void CanConvertFromBase36TestNegative()
+        {
+            var result = XConverter.FromBase36Hash("-7PS");
+            Assert.AreEqual(-10000, new BigInteger(result));
+        }
     }
 }

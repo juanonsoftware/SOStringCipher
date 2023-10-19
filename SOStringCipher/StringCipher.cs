@@ -9,7 +9,9 @@ namespace SOStringCipher
 {
     /// <summary>
     /// Original source code is from here https://stackoverflow.com/a/27484425
-    /// But with improvements added
+    /// But with improvements added:
+    /// - Use a password as parameter
+    /// - Support several kinds of output including HEX, Base64, Base62, Base36
     /// </summary>
     public static class StringCipher
     {
@@ -127,6 +129,7 @@ namespace SOStringCipher
                 return XConverter.ToBase62(bytes);
             }
 
+            // HEX
             return new BigInteger(bytes).ToString("X");
         }
     }
