@@ -19,4 +19,8 @@
     <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="BigNumber" Version="1.1.1" />
+  </ItemGroup>
+
 </Project>

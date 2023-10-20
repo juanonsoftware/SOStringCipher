@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BigNumber;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Numerics;
@@ -15,11 +16,24 @@ namespace SOStringCipher
     /// </summary>
     public static class StringCipher
     {
+        /// <summary>
+        /// Encrypt a string and give output in Base64 string
+        /// </summary>
+        /// <param name="clearText"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public static string Encrypt(string clearText, string password)
         {
             return Encrypt(clearText, password, OutputFormat.Base64);
         }
 
+        /// <summary>
+        /// Encrypt a string with custom output format
+        /// </summary>
+        /// <param name="clearText"></param>
+        /// <param name="password"></param>
+        /// <param name="outputFormat"></param>
+        /// <returns></returns>
         public static string Encrypt(string clearText, string password, OutputFormat outputFormat)
         {
             byte[] clearBytes = Encoding.Unicode.GetBytes(clearText);
@@ -41,11 +55,24 @@ namespace SOStringCipher
             }
         }
 
+        /// <summary>
+        /// Decrypt an encrypted string in Base64 format
+        /// </summary>
+        /// <param name="cipherText"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public static string Decrypt(string cipherText, string password)
         {
             return Decrypt(cipherText, password, OutputFormat.Base64);
         }
 
+        /// <summary>
+        /// Decrypt an encryption string in custom output format
+        /// </summary>
+        /// <param name="cipherText"></param>
+        /// <param name="password"></param>
+        /// <param name="cipherFormat"></param>
+        /// <returns></returns>
         public static string Decrypt(string cipherText, string password, OutputFormat cipherFormat)
         {
             byte[] cipherBytes = ConvertToBytes(cipherText, cipherFormat);
