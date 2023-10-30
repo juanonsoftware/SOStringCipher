@@ -28,4 +28,4 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Create nuget package
-      run: dotnet pack ~/SOStringCipher/SOStringCipher/SOStringCipher.csproj -p:PackageVersion=1.3.0.231030 -c Release
+      run: dotnet pack -p:PackageVersion=1.3.0.231030 -c Release ./SOStringCipher/SOStringCipher/SOStringCipher.csproj 
