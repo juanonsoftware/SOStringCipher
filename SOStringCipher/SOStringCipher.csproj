@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <Title>SO StringCipher</Title>
     <Description>Contains API to encrypt / descrypt strings</Description>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
