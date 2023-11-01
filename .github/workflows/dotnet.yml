@@ -28,6 +28,6 @@ jobs:
     - name: Build
       run: dotnet build --no-restore -c Release
     - name: Test
-      run: dotnet test --no-build --verbosity -c Release normal
+      run: dotnet test --verbosity -c Debug normal
     - name: Create nuget package
       run: dotnet pack -p:PackageVersion=1.3.0.231030 -c Release --no-build /home/runner/work/SOStringCipher/SOStringCipher/SOStringCipher/SOStringCipher.csproj
