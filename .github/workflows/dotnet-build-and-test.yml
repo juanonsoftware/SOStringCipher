@@ -31,3 +31,5 @@ jobs:
       run: dotnet build --no-restore -c Release
     - name: Create nuget package
       run: dotnet pack -p:PackageVersion=1.3.0.231030 -c Release --no-build ${{ github.workspace }}/SOStringCipher/SOStringCipher.csproj
+    - name: Push to nuget
+      run: dotnet nuget push ${{ github.workspace }}/SOStringCipher/bin/Release/SOStringCipher.1.3.0.231030.nupkg -k ${{ secrets.NUGET_PUSH_TOKEN }} -s https://api.nuget.org/v3/index.json
